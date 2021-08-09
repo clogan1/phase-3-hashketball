@@ -217,3 +217,46 @@ def biggest_shoe_size
     player[:shoe]
   end
 end
+
+def most_points_scored 
+  top_scorer = all_players.max_by do |player|
+    player[:points]
+  end
+  top_scorer[:player_name]
+end
+
+def winning_team
+  home_arr = game_hash[:home][:players]
+  away_arr = game_hash[:away][:players]
+  home_score = 0
+  away_score = 0
+
+  home_arr.each do |player|
+    home_score = home_score + player[:points]
+  end
+  away_arr.each do |player|
+    away_score = away_score + player[:points]
+  end
+
+  home_score > away_score ? game_hash[:home][:team_name] : game_hash[:away][:team_name]
+end
+
+def player_with_longest_name
+  long_name = all_players.max_by do |player|
+    player[:player_name].length
+  end
+  long_name[:player_name]
+end
+
+
+def most_steals 
+  top_steals = all_players.max_by do |player|
+    player[:steals]
+  end
+  top_steals[:player_name]
+end
+
+def long_name_steals_a_ton?
+  player_with_longest_name == most_steals 
+end
+
