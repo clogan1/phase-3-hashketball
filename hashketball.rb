@@ -1,3 +1,5 @@
+require "pry"
+
 # Write your code below game_hash
 def game_hash
   {
@@ -127,3 +129,91 @@ def game_hash
 end
 
 # Write code here
+
+# Array of all Players
+#  home_players = game_hash[:home][:players]
+#  away_players = game_hash[:away][:players]
+#  home_players + away_players
+def all_players 
+ game_hash[:home][:players] + game_hash[:away][:players]
+end
+
+# def all_team_info(team)
+#   # all_team = game_hash[:home] + game_hash[:away]
+#   # all_team.find do |single_team|
+#   #   single_team[:team_name] == team
+#   # end
+#   game_hash.find do |type, data|
+#     data[:team_name] = team
+#   end
+# end
+
+def all_team_info(team_name)
+  team_info = game_hash.find do |color, team_data|
+    team_data[:team_name] == team_name
+  end
+  team_info[1]
+end
+
+# Deliverables:
+
+# num_points_scored: argument of a player's name / returns the number of points scored
+    # array of all the player hashes
+
+def num_points_scored(name)
+   player_stats(name)[:points]
+end
+  
+
+# shoe_size: argument of player name / returns that player's shoe size
+    # array of all the player hashes
+def shoe_size(name)
+  player_stats(name)[:shoe]
+end
+
+# team_colors: arg. of team name / returns arary of colors
+
+def team_colors(team_name)
+  found_team = all_team_info(team_name)
+  found_team[:colors]
+end
+
+# team_names: operates on game hash / returns array of team names
+def team_names
+  # team_array = []
+  # team_array.push(game_hash[:home][:team_name])
+  # team_array.push(game_hash[:away][:team_name])
+  # team_array
+  game_hash.map do |location, team_data|
+    team_data[:team_name]
+  end
+end
+
+# player_numbers: arg of team name / returns array of jersey numbers
+def player_numbers(team_name)
+  team = all_team_info(team_name)
+  team[:players].map do |player|
+    player[:number]
+  end
+end
+
+# player_stats: arg of player name / reutrns hash of player's stats
+    # array of all the player hashes
+
+def player_stats(name)
+   all_players.find do |player|
+    player[:player_name] == name
+  end
+end
+
+# big_shoe_rebounds: returns number of rebounds of the player with the largest shoe
+  # player with largest shoe
+def big_shoe_rebounds
+  biggest_shoe_size[:rebounds]
+end
+
+def biggest_shoe_size 
+  all_players.max_by do |player|
+    player[:shoe]
+  end
+end
